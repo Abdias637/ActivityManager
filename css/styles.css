@@ -1,0 +1,163 @@
+/* Estilo base del cuerpo */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 20px;
+    color: #333333; 
+    line-height: 1.5;
+}
+
+/* Cabecera */
+header {
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+    margin-bottom: 20px;
+}
+
+.logo {
+    width: 250px;
+    margin-right: -80px;
+}
+
+/* Títulos */
+h1 {
+    font-family: 'Akzidenz-Grotesk', sans-serif;
+    font-size: 36px;
+    color: #005285; /* Color azul oscuro para títulos principales */
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+h2, h3 {
+    font-family: 'Akzidenz-Grotesk', sans-serif;
+    color: #046da3; /* Segundo tono azul para subtítulos */
+    margin-bottom: 15px;
+}
+
+h2 {
+    font-size: 28px;
+    font-weight: 600;
+}
+
+h3 {
+    font-size: 22px;
+    font-weight: 600;
+}
+
+/* Párrafos y spans */
+p, span {
+    font-size: 16px;
+    margin-bottom: 15px;
+    color: #333333;
+}
+
+/* Notas */
+.nota {
+    font-size: 14px;
+    color: #666666;
+    font-style: italic;
+}
+
+/* Botones */
+.btn, .btn-edit, .btn-delete {
+    display: inline-block;
+    padding: 8px 12px;
+    font-size: 14px;
+    color: white;
+    background-color: #005285; /* Color principal de los botones */
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.btn:hover, .btn-edit:hover, .btn-delete:hover {
+    background-color: #046da3; /* Efecto hover más claro */
+}
+
+.btn-delete {
+    background-color: #e63946; /* Botón de eliminar en rojo */
+}
+
+.btn-delete:hover {
+    background-color: #d62828;
+}
+
+/* Contenedores */
+.container {
+    margin-bottom: 30px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.task-list, .note-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.task-list li, .note-list li {
+    padding: 10px;
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f5f5f5;
+}
+
+/* Inputs */
+.task-input, .note-input {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.task-input input, textarea {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    flex: 1;
+    background-color: #f0faff; /* Fondo suave para inputs */
+}
+
+.task-input button, .note-input button {
+    padding: 10px 15px;
+    font-size: 16px;
+    color: white;
+    background-color: #0ba8e2; /* Color para los botones */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.task-input button:hover, .note-input button:hover {
+    background-color: #088ac2; /* Hover más claro */
+}
+
+/* Estilo del pie de página */
+footer {
+    text-align: center; /* Centrado del contenido */
+    margin-top: 20px;
+    font-size: 0.9rem;
+    color: #72d5f8; /* Tono más claro para el texto del footer */
+    background-color: #005285; /* Fondo azul oscuro para el footer */
+    padding: 10px;
+    border-radius: 5px;
+}
+
+textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    background-color: #f0faff; /* Fondo claro */
+}
