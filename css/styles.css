@@ -1,163 +1,126 @@
-/* Estilo base del cuerpo */
+/* Estilo base */
 body {
     font-family: 'Poppins', sans-serif;
-    background-color: #f5f5f5;
+    background-color: #f0f2f5;
+    color: #333;
     margin: 0;
-    padding: 20px;
-    color: #333333; 
-    line-height: 1.5;
+    padding: 0;
+    text-align: center;
 }
 
 /* Cabecera */
 header {
-    display: flex;
-    align-items: center;
-    justify-content: center; 
-    margin-bottom: 20px;
+    background-color: #3b5998;
+    color: white;
+    padding: 20px;
+    text-align: center;
 }
 
 .logo {
     width: 250px;
-    margin-right: -80px;
+    vertical-align: middle;
 }
 
-/* Títulos */
 h1 {
-    font-family: 'Akzidenz-Grotesk', sans-serif;
+    display: inline-block;
     font-size: 36px;
-    color: #005285; /* Color azul oscuro para títulos principales */
+    margin: 0;
+    margin-left: 15px;
+    vertical-align: middle;
+}
+
+/* Reloj */
+#clock {
+    font-size: 24px;
+    margin: 20px 0;
     font-weight: bold;
+}
+
+/* Contenido principal */
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    max-width: 800px;
     margin-bottom: 20px;
 }
 
-h2, h3 {
-    font-family: 'Akzidenz-Grotesk', sans-serif;
-    color: #046da3; /* Segundo tono azul para subtítulos */
-    margin-bottom: 15px;
-}
-
-h2 {
-    font-size: 28px;
-    font-weight: 600;
-}
-
-h3 {
-    font-size: 22px;
-    font-weight: 600;
-}
-
-/* Párrafos y spans */
-p, span {
-    font-size: 16px;
-    margin-bottom: 15px;
-    color: #333333;
-}
-
-/* Notas */
-.nota {
-    font-size: 14px;
-    color: #666666;
-    font-style: italic;
-}
-
-/* Botones */
-.btn, .btn-edit, .btn-delete {
-    display: inline-block;
-    padding: 8px 12px;
-    font-size: 14px;
-    color: white;
-    background-color: #005285; /* Color principal de los botones */
-    border: none;
-    border-radius: 5px;
-    text-decoration: none;
-    margin-top: 10px;
-    cursor: pointer;
-}
-
-.btn:hover, .btn-edit:hover, .btn-delete:hover {
-    background-color: #046da3; /* Efecto hover más claro */
-}
-
-.btn-delete {
-    background-color: #e63946; /* Botón de eliminar en rojo */
-}
-
-.btn-delete:hover {
-    background-color: #d62828;
-}
-
-/* Contenedores */
-.container {
-    margin-bottom: 30px;
-    padding: 20px;
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.task-list, .note-list {
+/* Listas */
+.task-list,
+.note-list {
     list-style-type: none;
     padding: 0;
 }
 
-.task-list li, .note-list li {
+.task-list li,
+.note-list li {
+    background-color: #f7f7f7;
     padding: 10px;
-    border: 1px solid #ddd;
+    border-radius: 5px;
     margin-bottom: 10px;
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    background-color: #f5f5f5;
 }
 
-/* Inputs */
-.task-input, .note-input {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 10px;
+.task-list li span,
+.note-list li span {
+    display: inline-block;
+    width: 70%;
+    text-align: left;
 }
 
-.task-input input, textarea {
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    flex: 1;
-    background-color: #f0faff; /* Fondo suave para inputs */
-}
-
-.task-input button, .note-input button {
-    padding: 10px 15px;
-    font-size: 16px;
-    color: white;
-    background-color: #0ba8e2; /* Color para los botones */
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.task-input button:hover, .note-input button:hover {
-    background-color: #088ac2; /* Hover más claro */
-}
-
-/* Estilo del pie de página */
-footer {
-    text-align: center; /* Centrado del contenido */
-    margin-top: 20px;
-    font-size: 0.9rem;
-    color: #72d5f8; /* Tono más claro para el texto del footer */
-    background-color: #005285; /* Fondo azul oscuro para el footer */
-    padding: 10px;
-    border-radius: 5px;
-}
-
+/* Formulario de entrada */
+.task-input input,
 textarea {
     width: 100%;
     padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    margin-bottom: 10px;
-    background-color: #f0faff; /* Fondo claro */
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.task-input button,
+.note-list button {
+    padding: 8px 16px;
+    background-color: #3b5998;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.task-input button:hover,
+.note-list button:hover {
+    background-color: #2d4373;
+}
+
+/* Estilo de notas */
+.note-text {
+    text-align: left;
+}
+
+.btn-edit {
+    margin-left: 10px;
+    background-color: #ff9800;
+}
+
+.btn-delete {
+    background-color: #f44336;
+}
+
+footer {
+    background-color: #3b5998;
+    color: white;
+    padding: 10px 0;
+    margin-top: 20px;
 }

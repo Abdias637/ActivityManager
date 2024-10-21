@@ -1,35 +1,54 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Aplicación de gestión de tareas y notas. Organiza tus actividades diarias con facilidad.">
+    <meta name="description"
+        content="Aplicación de gestión de tareas y notas. Organiza tus actividades diarias con facilidad.">
     <title>Administrador de Actividades</title>
     <link rel="icon" href="logo.png" type="image/png">
-    <link href="https://fonts.googleapis.com/css2?family=Akzidenz-Grotesk&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Akzidenz-Grotesk&family=Poppins:wght@400;600&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
 </head>
+
 <body>
     <header>
         <img src="logo.png" alt="Logotipo de la aplicación" class="logo">
         <h1>Administrador de Actividades</h1>
     </header>
 
+    <!-- Contenedor del reloj -->
+    <div id="clock" class="clock"></div>
+
     <main>
         <section class="container" aria-labelledby="taskListHeader">
             <h2 id="taskListHeader">Lista de Tareas</h2>
+            <div class="filter">
+                <label for="filterDate">Filtrar por fecha límite:</label>
+                <input type="date" id="filterDate">
+                <button type="button" onclick="filterTasksByDate()">Filtrar</button>
+
+                <label for="searchTask">Buscar por palabra clave:</label>
+                <input type="text" id="searchTask" placeholder="Buscar tarea" oninput="filterTasksByKeyword()">
+            </div>
+
             <ul class="task-list" id="taskList" role="list">
                 <!-- Las tareas agregadas aparecerán aquí -->
             </ul>
 
             <div class="task-input">
                 <label for="taskInput">Nueva tarea:</label>
-                <input type="text" id="taskInput" placeholder="Agregar nueva tarea" aria-describedby="taskInputHelp" aria-required="true">
+                <input type="text" id="taskInput" placeholder="Agregar nueva tarea" aria-describedby="taskInputHelp"
+                    aria-required="true">
                 <label for="startDate">Fecha de inicio:</label>
                 <input type="date" id="startDate" aria-required="true">
-
                 <label for="endDate">Fecha límite:</label>
                 <input type="date" id="endDate" aria-required="true">
+
+                <label for="taskTag">Etiqueta:</label>
+                <input type="text" id="taskTag" placeholder="Ejemplo: Urgente, Trabajo">
 
                 <button type="button" aria-label="Agregar tarea" onclick="addTask()">Agregar</button>
             </div>
@@ -38,7 +57,8 @@
         <section class="container" aria-labelledby="noteSectionHeader">
             <h2 id="noteSectionHeader">Notas y Recordatorios</h2>
             <label for="noteInput">Escribe una nueva nota:</label>
-            <textarea id="noteInput" rows="4" placeholder="Escribe aquí tus notas o recordatorios..." aria-describedby="noteInputHelp"></textarea>
+            <textarea id="noteInput" rows="4" placeholder="Escribe aquí tus notas o recordatorios..."
+                aria-describedby="noteInputHelp"></textarea>
             <button type="button" onclick="saveNote()">Guardar Nota</button>
 
             <ul class="note-list" id="noteList" role="list">
@@ -51,43 +71,93 @@
         <p>© 2024 Gestión de Actividades. Todos los derechos reservados.</p>
     </footer>
 
+    <!-- Script para actualizar el reloj -->
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, "0");
+            const minutes = String(now.getMinutes()).padStart(2, "0");
+            const seconds = String(now.getSeconds()).padStart(2, "0");
+            const timeString = `${hours}:${minutes}:${seconds}`;
+            document.getElementById("clock").innerText = timeString;
+        }
+
+        setInterval(updateClock, 1000);
+    </script>
+
+    <!-- Script para tareas -->
     <script>
         function addTask() {
-            const taskInput = document.getElementById('taskInput');
-            const taskText = taskInput.value.trim();
+            const taskInput = document.getElementById('taskInput').value.trim();
             const startDate = document.getElementById('startDate').value;
             const endDate = document.getElementById('endDate').value;
+            const taskTag = document.getElementById('taskTag').value.trim();
 
-            if (taskText && startDate && endDate) {
-                const taskList = document.getElementById('taskList');
-                const newTask = document.createElement('li');
-                newTask.innerHTML = `
-                    <span>${taskText} (Inicio: ${startDate}, Límite: ${endDate})</span>
-                    <button class="btn" onclick="completeTask(this)" aria-label="Completar tarea">Completar</button>`;
-                taskList.appendChild(newTask);
-                taskInput.value = '';
-                document.getElementById('startDate').value = '';
-                document.getElementById('endDate').value = '';
+            if (taskInput && startDate && endDate) {
+                const task = {
+                    text: taskInput,
+                    startDate: startDate,
+                    endDate: endDate,
+                    tag: taskTag,
+                    completed: false
+                };
+                saveTaskToLocalStorage(task);
+                renderTask(task);
+                resetInputFields();
             } else {
-                alert('Por favor, ingresa una tarea y las fechas de inicio y límite.');
+                alert('Por favor, completa todos los campos.');
             }
+        }
+
+        function renderTask(task) {
+            const taskList = document.getElementById('taskList');
+            const newTask = document.createElement('li');
+            newTask.innerHTML = `
+                <span>${task.text} (Inicio: ${task.startDate}, Límite: ${task.endDate}) - Etiqueta: ${task.tag || 'Sin etiqueta'}</span>
+                <button class="btn" onclick="completeTask(this)" aria-label="Completar tarea">Completar</button>`;
+            taskList.appendChild(newTask);
+        }
+
+        function saveTaskToLocalStorage(task) {
+            let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+            tasks.push(task);
+            localStorage.setItem('tasks', JSON.stringify(tasks));
         }
 
         function completeTask(button) {
             const taskItem = button.parentNode;
-            const completedTaskText = taskItem.querySelector('span').textContent; // Obtener el texto de la tarea
-
-            // Eliminar la tarea original
+            const taskText = taskItem.querySelector('span').textContent;
             taskItem.remove();
-
-            // Agregar la tarea completada
             const completedList = document.createElement('li');
             completedList.innerHTML = `
-                <span style="text-decoration: line-through; color: green;">${completedTaskText} - Completada</span>
+                <span style="text-decoration: line-through; color: green;">${taskText} - Completada</span>
                 <p style="color: green;">¡Felicidades! Has completado una tarea.</p>`;
-            
-            // Añadir la tarea completada al final de la lista de tareas
             document.getElementById('taskList').appendChild(completedList);
+        }
+
+        function filterTasksByDate() {
+            const filterDate = document.getElementById('filterDate').value;
+            const taskList = document.getElementById('taskList');
+            taskList.innerHTML = '';
+            const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+            const filteredTasks = tasks.filter(task => task.endDate === filterDate);
+            filteredTasks.forEach(task => renderTask(task));
+        }
+
+        function filterTasksByKeyword() {
+            const keyword = document.getElementById('searchTask').value.toLowerCase();
+            const taskList = document.getElementById('taskList');
+            taskList.innerHTML = '';
+            const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+            const filteredTasks = tasks.filter(task => task.text.toLowerCase().includes(keyword));
+            filteredTasks.forEach(task => renderTask(task));
+        }
+
+        function resetInputFields() {
+            document.getElementById('taskInput').value = '';
+            document.getElementById('startDate').value = '';
+            document.getElementById('endDate').value = '';
+            document.getElementById('taskTag').value = '';
         }
 
         function saveNote() {
@@ -98,8 +168,7 @@
                 newNote.innerHTML = `
                     <span class="note-text">${noteInput}</span>
                     <button class="btn-edit" onclick="editNote(this)" aria-label="Editar nota">Editar</button>
-                    <button class="btn-delete" onclick="deleteNote(this)" aria-label="Eliminar nota">Eliminar</button>
-                `;
+                    <button class="btn-delete" onclick="deleteNote(this)" aria-label="Eliminar nota">Eliminar</button>`;
                 noteList.appendChild(newNote);
                 document.getElementById('noteInput').value = '';
             } else {
@@ -120,6 +189,11 @@
             const noteItem = button.parentNode;
             noteItem.remove();
         }
+
+        window.onload = function () {
+            const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+            tasks.forEach(task => renderTask(task));
+        };
     </script>
 </body>
 </html>
